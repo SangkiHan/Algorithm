@@ -21,7 +21,7 @@ public class 무인도여행 {
         	for(int j=0; j<maps[0].length(); j++) {
         		//시작지점이 X가 아니거나 방문하지 않았을 시
         		if(!("X".equals(String.valueOf(maps[i].charAt(j)))||check[i][j]==true)){	
-        			answer.add(answer(maps, i, j));
+        			answer.add(dfs(maps, i, j));
         		}
         	}
         }
@@ -35,17 +35,21 @@ public class 무인도여행 {
         return answer;
     }
 	
-	static int answer(String[] maps, int x, int y) {
+	static int dfs(String[] maps, int x, int y) {
+		//x와 y가 maps범위내에서 벗어 났을시 return 0
 		if(x==-1|| x==maps.length||y==-1||y==maps[0].length()||check[x][y]==true) {
 			return 0;
 		}
 		else {
+			//범위 내지만 만약 X면 return0
 			if("X".equals(String.valueOf(maps[x].charAt(y)))) {
 				return 0;
 			}
+			//방문했으니 방문처리
 			check[x][y]=true;
 		}
 		
-		return Character.getNumericValue(maps[x].charAt(y))+answer(maps, x+1, y)+answer(maps,x,y+1)+answer(maps,x-1,y)+answer(maps,x,y-1);
+		//사방으로 dfs돌리기
+		return Character.getNumericValue(maps[x].charAt(y))+dfs(maps, x+1, y)+dfs(maps,x,y+1)+dfs(maps,x-1,y)+dfs(maps,x,y-1);
 	}
 }
