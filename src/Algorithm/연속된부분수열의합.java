@@ -1,59 +1,44 @@
 package Algorithm;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class 연속된부분수열의합 {
 	
 	public static void main(String[] args) {
-		int[] sequence = {2,2,2,2,2};
-		int k = 6;
+		int[] sequence = {1,1,1,2,3,4,5};
+		int k = 7;
 		solution(sequence, k);
 	}
 	
 	static int[] solution(int[] sequence, int k) {
-        int[] answer = new int[2];
-        List<int[]> list = new ArrayList<>();
-        
-        int sum = sequence[0];
-
-    	int right=0;
-    	int left=0;
-    	
-        while(true) {
-        	if(sum == k) {
-        		int[] ans = new int[3];
-        		ans[0] = right-left;
-        		ans[1] = left;
-        		ans[2] = right;
-        		list.add(ans);
-        	}
-        	else if(sum>k) {
-        		sum-=sequence[left];
-        		sum-=sequence[right];
-        		right--;
-        		left++;
-        	}
-        	if(sequence.length-1==right && sequence.length-1==left) {
-        		break;
-        	}
-        	if(right!=sequence.length-1) {
-            	right++;
-            	sum+=sequence[right];
-        	}
-        	else {
-        		sum-=sequence[left];
-        		left++;
-        	}
-        }
-        
-        
-        Collections.sort(list, (o1,o2)->{return o1[0]-o2[0];});
-        answer[0] = list.get(0)[1];
-        answer[1] = list.get(0)[2];
-        
-        return answer;
+		int[] answer = new int[2];
+		
+		int startIndex=0;	//시작 Index값을 담는다
+		int endIndex=0;		//마지막 Index값을 담는다.
+		int sum=sequence[startIndex];	//Index사이 값들의 합, list첫 값으로 초기화
+		int min=Integer.MAX_VALUE;	//제일 작은 값을 넣어줘야하기에 Integer최댓값으로 초기화
+		
+		
+		//마지막 Index가 요청값 list 길이를 넘어버리면 반복문을 종료한다.
+		while(endIndex<sequence.length) {
+			//합계가 K와 같고, 두 Index사이 거리가 최솟값보다 작다면 answer에 넣어준다.
+			if(sum==k && (endIndex-startIndex)<min) {
+				answer[0] = startIndex;
+				answer[1] = endIndex;
+				min = endIndex-startIndex;
+			}
+			//합계가 K보다 크다면 시작Index를 앞으로 땡기고 합계해서 빼준다.
+			if(sum>k) {
+				sum-=sequence[startIndex];
+				startIndex++;
+			}
+			else { //합계가 K보다 작다면 마지막Index를 앞으로 땡기고 합에 더해준다.
+				endIndex++;
+				if(endIndex!=sequence.length) {
+					sum+=sequence[endIndex];
+				}
+			}
+		}
+		
+		return answer;
     }
 
 }
