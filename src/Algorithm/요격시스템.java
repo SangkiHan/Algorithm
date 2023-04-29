@@ -1,6 +1,10 @@
 package Algorithm;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class 요격시스템 {
 	public static void main(String[] args) {
@@ -12,7 +16,17 @@ public class 요격시스템 {
         int answer = 0;
         
         Arrays.sort(targets, (o1, o2) -> {return o1[1]-o2[1];});
-            
+        
+        List<int[]> list = new ArrayList<>();
+        Collections.sort(list, new Comparator<int[]>() {
+
+			@Override
+			public int compare(int[] o1, int[] o2) {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+		});
+        
         int launch = -1;
         
         for(int[] target : targets){
