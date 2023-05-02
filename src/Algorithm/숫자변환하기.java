@@ -18,32 +18,32 @@ public class 숫자변환하기 {
 		int[] array = new int[y+1];
 		
 		for(int i=x+1; i<array.length; i++) {
-			int a = Integer.MAX_VALUE;
+			int a = Integer.MAX_VALUE;//최대값으로 세팅
 			int b = Integer.MAX_VALUE;
 			int c = Integer.MAX_VALUE;
-			int d = 0;
-			if(check(i,2) && (i/2)>=x) {
+			int d = 0;//*2 *3 -n중 제일 최소인 값을 넣어줄 변수
+			if(check(i,2) && (i/2)>=x) {//자연수이고 2로 나누었을 때 x보다 큰 값
 				a = array[i/2];
 			}
-			if(check(i,3) && (i/3)>=x) {
+			if(check(i,3) && (i/3)>=x) {//자연수이고 3로 나누었을 때 x보다 큰 값
 				b = array[i/3];
 			}
-			if((i-n)>=x) {
+			if((i-n)>=x) {//n으로 뺐을 때 x보다 큰 값
 				c = array[i-n];
 			}
 			
-			d = Math.min(a, b);
+			d = Math.min(a, b);//제일 최소값 찾기
 			d = Math.min(d, c);
 			
-			if(d<Integer.MAX_VALUE) {
+			if(d<Integer.MAX_VALUE) {//d가 최대값보다 작을 시 해당인덱스 횟수 +1
 				array[i] = d+1;
 			}
-			else {
+			else {//최대값일시 최대값 세팅
 				array[i] = d;
 			}
 		}
 		
-		return (array[y]==Integer.MAX_VALUE)?-1:array[y];
+		return (array[y]==Integer.MAX_VALUE)?-1:array[y];//y인덱스의 값이 최대값일시 변환 할 수 없다는 뜻이므로 -1 세팅
 	}
 	
 	static boolean check(int num, int i) {
