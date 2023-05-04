@@ -33,5 +33,4 @@ public class 공평하게나누기 {
         }
         return answer;
     }
-
 }
