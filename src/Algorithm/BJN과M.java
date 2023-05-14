@@ -19,27 +19,33 @@ public class BJN과M {
 			arr[i] = i+1;
 		}
 		
-		dfs(n, m, 0, new boolean[n]);
+		for(int i=0; i<n; i++) {
+			dfs(arr[i], m, 0, new boolean[m]);
+		}
+		
 		for(List<Integer> list : answerList) {
 			System.out.print(list.toString());
 		}
 	}
 	
-	static void dfs(int n, int m, int index, boolean[] check) {
+	static void dfs(int i, int m, int index, boolean[] check) {
 		if(m==0) {
-			List<Integer> answerArr = new ArrayList<>();
-			for(int i=0; i<check.length; i++) {
-				if(check[i]) {
-					answerArr.add(arr[i]);
+			List<Integer> list = new ArrayList<>();
+			list.add(i);
+			for(int j=0; j<check.length; j++) {
+				if(check[j]&&j!=i) {
+					list.add(arr[j]);
 				}
 			}
-			answerList.add(answerArr);
+			answerList.add(list);
 		}
 		else {
-			for(int i=index; i<check.length; i++) {
-				check[i]=true;
-				dfs(n, m-1, index+1, check);
-				check[i]=false;
+			for(int j=index; j<check.length; j++) {
+				if(j!=i) {
+					check[j] = true;
+					dfs(i, m-1, index+1, check);
+					check[j] = false;
+				}
 			}
 		}
 	}
