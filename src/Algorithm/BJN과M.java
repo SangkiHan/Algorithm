@@ -8,48 +8,34 @@ public class BJN과M {
 	
 	static List<List<Integer>> answerList = new ArrayList<>();
 	static int[] arr;
+	static boolean[] visit;
 	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int n = sc.nextInt();
 		int m = sc.nextInt();
 		
-		arr = new int[n];
-		for(int i=0; i<n; i++) {
-			arr[i] = i+1;
-		}
+		arr = new int[m];
+		visit = new boolean[n];
 		
-		for(int i=0; i<n; i++) {
-			dfs(arr[i], m-1, 0, new boolean[n]);
-		}
-		
-		for(List<Integer> list : answerList) {
-			System.out.println(list.toString());
-		}
+		dfs(n, m, 0);
 	}
 	
-	static void dfs(int i, int m, int index, boolean[] check) {
-		if(m==0) {
-			List<Integer> list = new ArrayList<>();
-			list.add(i);
-			for(int j=0; j<check.length; j++) {
-				if(check[j]) {
-					list.add(arr[j]);
-				}
+	static void dfs(int N, int M, int depth) {
+		if (depth == M) {
+			for (int val : arr) {
+				System.out.print(val + " ");
 			}
-			answerList.add(list);
+			System.out.println();
+			return;
 		}
-		else {
-			for(int j=index; j<check.length; j++) {
-				if(j+1!=i) {
-					check[j] = true;
-					dfs(i, m-1, index+1, check);
-					check[j] = false;
-					index++;
-				}
-				else {
-					index++;
-				}
+ 
+		for (int i = 0; i < N; i++) {
+			if (!visit[i]) {
+				visit[i] = true;
+				arr[depth] = i + 1;
+				dfs(N, M, depth + 1);
+				visit[i] = false;
 			}
 		}
 	}
