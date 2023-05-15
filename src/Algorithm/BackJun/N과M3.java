@@ -2,7 +2,7 @@ package Algorithm.BackJun;
 
 import java.util.Scanner;
 
-public class BJN과M3 {
+public class N과M3 {
 	
 	static int[] arr;
 	static StringBuilder str = new StringBuilder();

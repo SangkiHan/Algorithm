@@ -2,7 +2,7 @@ package Algorithm.BackJun;
 
 import java.util.Scanner;
 
-public class BJN과M2 {
+public class N과M2 {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);

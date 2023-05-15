@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class BJN과M {
+public class N과M {
 	
 	static List<List<Integer>> answerList = new ArrayList<>();
 	static int[] arr;
