@@ -33,7 +33,7 @@ public class Sudoku {
 		if(depth==81) {
 			answerArr = arr.clone();
 			return;
-		}
+		}  
 		int[][] dfsArr = arr.clone();
 		if(dfsArr[index][jindex]==0) {
 			for(int i=1; i<=9; i++) {
