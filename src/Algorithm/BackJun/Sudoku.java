@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Sudoku {
 	
-	static int[][] answerArr;
+	static int[][] answerArr = new int[9][9];
 	static StringBuilder builder = new StringBuilder();
 
 	public static void main(String[] args) {
@@ -14,74 +14,53 @@ public class Sudoku {
 		int n = 9;
 		int m = 9;
 		
-		int[][] arr = new int[n][m];
-		
 		for(int i=0; i<n; i++) {
 			int[] serveArr = new int[m];
 			for(int j=0; j<m; j++) {
 				serveArr[j] = sc.nextInt();
 			}
-			arr[i] = serveArr;
+			answerArr[i] = serveArr;
 		}
 		
-		dfs(0,0,0,arr);
+		dfs(0,0);
 		
 		System.out.println(builder);
 	}
 	
-	static void dfs(int index, int jindex, int depth, int[][] arr) {
-		if(depth==81) {
-			answerArr = arr.clone();
+	static void dfs(int index, int jindex) {
+		if(jindex == 9) {
+			dfs(index+1, 0);
 			return;
-		}  
-		int[][] dfsArr = arr.clone();
-		if(dfsArr[index][jindex]==0) {
+		}
+		if(index == 9) {
+			for(int i=0; i<9; i++) {
+				for(int j=0; j<9; j++) {
+					System.out.print(answerArr[i][j]+" ");
+				}
+				System.out.println();
+			}
+			System.exit(0);
+		}
+		if(answerArr[index][jindex]==0) {
 			for(int i=1; i<=9; i++) {
-				if(area(index, jindex, i, dfsArr) && vertical(jindex, i, dfsArr) && horizon(index, i, dfsArr)) {
-					dfsArr[index][jindex]=i;
-					if(jindex>=8) {
-						if(index>=8) {
-							return;
-						}
-						index++;
-						depth++;
-						jindex=0;
-					}
-					else {
-						jindex++;
-						depth++;
-					}
-					dfs(index, jindex, depth, dfsArr);
+				if(area(index, jindex, i) && vertical(jindex, i) && horizon(index, i)) {
+					answerArr[index][jindex]=i;
+					dfs(index, jindex+1);
 				}
 			}
-			if(dfsArr[index][jindex]==0) {
-				return;
-			}
+			answerArr[index][jindex] = 0;
+			return;
 		}
-		else {
-			if(jindex>=8) {
-				if(index>=8) {
-					return;
-				}
-				index++;
-				depth++;
-				jindex=0;
-			}
-			else {
-				jindex++;
-				depth++;
-			}
-			dfs(index, jindex, depth, dfsArr);
-		}
+		dfs(index, jindex + 1);
 	}
 	
-	static boolean area(int index, int jindex, int num, int[][] arr) {
+	static boolean area(int index, int jindex, int num) {
 		int a = (index/3)*3;
 		int b = (jindex/3)*3;
 		
 		for(int i=a; i<a+3; i++) {
 			for(int j=b; j<b+3; j++) {
-				if(arr[i][j]==num) {
+				if(answerArr[i][j]==num) {
 					return false;
 				}
 			}
@@ -89,18 +68,18 @@ public class Sudoku {
 		return true;
 	}
 	
-	static boolean vertical(int index, int num, int[][] arr) {
-		for(int i=0; i<arr.length; i++) {
-			if(arr[i][index]==num) {
+	static boolean vertical(int index, int num) {
+		for(int i=0; i<answerArr.length; i++) {
+			if(answerArr[i][index]==num) {
 				return false;
 			}
 		}
 		return true;
 	}
 	
-	static boolean horizon(int index, int num, int[][] arr) {
-		for(int i=0; i<arr[index].length; i++) {
-			if(arr[index][i]==num) {
+	static boolean horizon(int index, int num) {
+		for(int i=0; i<answerArr[index].length; i++) {
+			if(answerArr[index][i]==num) {
 				return false;
 			}
 		}
