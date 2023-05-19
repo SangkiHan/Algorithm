@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class Sudoku {
 	
 	static int[][] answerArr = new int[9][9];
-	static StringBuilder builder = new StringBuilder();
 
 	public static void main(String[] args) {
 		
@@ -23,28 +22,26 @@ public class Sudoku {
 		}
 		
 		dfs(0,0);
-		
-		System.out.println(builder);
 	}
 	
 	static void dfs(int index, int jindex) {
-		if(jindex == 9) {
+		if(jindex == 9) {//열이 9일시 행 +1
 			dfs(index+1, 0);
 			return;
 		}
-		if(index == 9) {
+		if(index == 9) {//행 열이 끝까지 도달하면 력
 			for(int i=0; i<9; i++) {
 				for(int j=0; j<9; j++) {
 					System.out.print(answerArr[i][j]+" ");
 				}
 				System.out.println();
 			}
-			System.exit(0);
+			return;
 		}
 		if(answerArr[index][jindex]==0) {
 			for(int i=1; i<=9; i++) {
-				if(area(index, jindex, i) && vertical(jindex, i) && horizon(index, i)) {
-					answerArr[index][jindex]=i;
+				if(area(index, jindex, i) && vertical(jindex, i) && horizon(index, i)) {//같은 숫자가 있을지 체크
+					answerArr[index][jindex]=i;//통과시 채워줌
 					dfs(index, jindex+1);
 				}
 			}
@@ -54,7 +51,7 @@ public class Sudoku {
 		dfs(index, jindex + 1);
 	}
 	
-	static boolean area(int index, int jindex, int num) {
+	static boolean area(int index, int jindex, int num) {//3x3 행열에 같은 숫자 있는지 체크
 		int a = (index/3)*3;
 		int b = (jindex/3)*3;
 		
@@ -68,7 +65,7 @@ public class Sudoku {
 		return true;
 	}
 	
-	static boolean vertical(int index, int num) {
+	static boolean vertical(int index, int num) {//열에 같은 숫자가 있을지 체크
 		for(int i=0; i<answerArr.length; i++) {
 			if(answerArr[i][index]==num) {
 				return false;
@@ -77,7 +74,7 @@ public class Sudoku {
 		return true;
 	}
 	
-	static boolean horizon(int index, int num) {
+	static boolean horizon(int index, int num) {//행에 같은 숫자가 있을지 체크
 		for(int i=0; i<answerArr[index].length; i++) {
 			if(answerArr[index][i]==num) {
 				return false;
